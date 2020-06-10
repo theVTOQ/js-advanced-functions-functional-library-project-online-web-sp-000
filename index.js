@@ -101,7 +101,15 @@ const fi = (function() {
        }
       
       //reduce/map approach:
-      return collection.filter((element, index, array) => array.indexOf(callback(element)) == index);
+      if(!isSorted){
+        collection.sort();
+      }
+
+      const callbackCollection = collection.map(callback);
+      console.log(collection);
+      console.log(callbackCollection);
+
+      return collection.filter((element, index, array) => callbackCollection.indexOf(callback(element)) === index);
 
       // object approach:
       const uniqueElements = [];
