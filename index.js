@@ -96,29 +96,25 @@ const fi = (function() {
     },
 
     uniq: function(collection, isSorted = true, callback){
-      // object approach:
-      console.log(`Callback undefined? ${!!callback}`);
       if (callback == undefined){
-       callback = function(value) {return value};
-      }
+        callback = function(value) {return value};
+       }
+      
+      //reduce/map approach:
+      return collection.filter((element, index, array) => array.indexOf(callback(element)) == index);
+
+      // object approach:
       const uniqueElements = [];
 
       const callbackOccurences = {}; //{value: occurences}
       collection.forEach(element => {
         const callbackValue = callback(element);
-        //console.log(`Element: ${element}, Callback on Element: ${callbackValue}`);
         const existingCallbackOccurences = callbackOccurences[callbackValue];
-        // console.log("Callback Occurences Hash:");
-        // console.log(callbackOccurences);
-        // console.log(`Existing occurences for callback value ${callbackValue} in Callback Occurences hash: ${existingCallbackOccurences}`);
 
         if (existingCallbackOccurences == undefined){
-          // console.log(`No existing occurences for ${callbackValue}, so adding it to uniques:`);
-          // console.log(uniqueElements);
           callbackOccurences[callbackValue] = 1;
           uniqueElements.push(element);
         }
-
       });
 
       return uniqueElements;
