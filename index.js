@@ -111,7 +111,7 @@ const fi = (function() {
 
       return collection.filter((element, index, array) => callbackCollection.indexOf(callback(element)) === index);
 
-      // object approach:
+      // object approach (only one iteration):
       const uniqueElements = [];
 
       const callbackOccurences = {}; //{value: occurences}
